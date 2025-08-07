@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+# Production-specific configurations  
+namespace: hello-world-prod
+
+patches:
+  - target:
+      kind: Deployment
+      name: hello-world-nginx
+    path: environment-patch.yaml
+
+# Production-specific labels
+labels:
+  - pairs:
+      environment: production
+      cluster: k3s
+
+# Production replica count
+replicas:
+  - name: hello-world-nginx
+    count: 3

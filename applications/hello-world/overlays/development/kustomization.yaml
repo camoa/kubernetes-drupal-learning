@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+# Development-specific configurations
+namespace: hello-world-dev
+
+patches:
+  - target:
+      kind: Deployment
+      name: hello-world-nginx
+    path: environment-patch.yaml
+
+# Development-specific labels
+labels:
+  - pairs:
+      environment: development
+      cluster: kind-local

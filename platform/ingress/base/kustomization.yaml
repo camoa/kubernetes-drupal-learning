@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - haproxy-ingress-namespace.yaml
+  - haproxy-manifests/clusterrole.yaml
+  - haproxy-manifests/clusterrolebinding.yaml
+  - haproxy-manifests/controller-configmap.yaml
+  - haproxy-manifests/controller-crdjob.yaml
+  - haproxy-manifests/controller-defaultcertsecret.yaml
+  - haproxy-manifests/controller-deployment.yaml
+  - haproxy-manifests/controller-ingressclass.yaml
+  - haproxy-manifests/controller-service.yaml
+  - haproxy-manifests/controller-serviceaccount.yaml
+
+labels:
+  - pairs:
+      managed-by: platform-team
+      component: ingress-controller
