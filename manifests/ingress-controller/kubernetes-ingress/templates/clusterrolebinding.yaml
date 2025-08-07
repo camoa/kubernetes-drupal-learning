@@ -1,0 +1,20 @@
+---
+# Source: kubernetes-ingress/templates/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: haproxy-ingress-kubernetes-ingress
+  labels:
+    app.kubernetes.io/name: kubernetes-ingress
+    app.kubernetes.io/instance: haproxy-ingress
+    helm.sh/chart: kubernetes-ingress-1.44.5
+    app.kubernetes.io/version: "3.1.9"
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: haproxy-ingress-kubernetes-ingress
+subjects:
+- kind: ServiceAccount
+  name: haproxy-ingress-kubernetes-ingress
+  namespace: haproxy-ingress

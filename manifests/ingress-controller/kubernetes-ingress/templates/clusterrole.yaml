@@ -1,0 +1,106 @@
+---
+# Source: kubernetes-ingress/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: haproxy-ingress-kubernetes-ingress
+  labels:
+    app.kubernetes.io/name: kubernetes-ingress
+    app.kubernetes.io/instance: haproxy-ingress
+    helm.sh/chart: kubernetes-ingress-1.44.5
+    app.kubernetes.io/version: "3.1.9"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - nodes
+  - pods
+  - services
+  - namespaces
+  - events
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - "extensions"
+  - "networking.k8s.io"
+  resources:
+  - ingresses
+  - ingresses/status
+  - ingressclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - "extensions"
+  - "networking.k8s.io"
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - patch
+  - update
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - core.haproxy.org
+  resources:
+     - '*'
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+- apiGroups:
+  - ingress.v1.haproxy.org
+  - ingress.v1.haproxy.com
+  resources:
+    - "*"
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+- apiGroups:
+  - "apiextensions.k8s.io"
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - "apps"
+  resources:
+  - replicasets
+  - deployments
+  - daemonsets
+  verbs:
+  - get
+  - list
+  - watch

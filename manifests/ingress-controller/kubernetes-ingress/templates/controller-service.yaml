@@ -1,0 +1,45 @@
+---
+# Source: kubernetes-ingress/templates/controller-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: haproxy-ingress-kubernetes-ingress
+  namespace: haproxy-ingress
+  labels:
+    app.kubernetes.io/name: kubernetes-ingress
+    app.kubernetes.io/instance: haproxy-ingress
+    helm.sh/chart: kubernetes-ingress-1.44.5
+    app.kubernetes.io/version: "3.1.9"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      appProtocol: http
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      appProtocol: https
+      targetPort: https
+    - name: quic
+      port: 443
+      protocol: UDP
+      appProtocol: https
+      targetPort: quic
+    - name: stat
+      port: 1024
+      protocol: TCP
+      targetPort: stat
+    - name: admin
+      port: 6060
+      protocol: TCP
+      targetPort: admin
+  selector:
+    app.kubernetes.io/name: kubernetes-ingress
+    app.kubernetes.io/instance: haproxy-ingress
+  externalIPs:
