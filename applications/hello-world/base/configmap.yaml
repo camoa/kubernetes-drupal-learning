@@ -13,6 +13,6 @@ data:
     <body>
         <h1>Hello World from Kubernetes!</h1>
         <p>This is running in a pod managed by Kubernetes</p>
-        <p>Environment: Development</p>
+        <p>Environment: Base</p>
     </body>
     </html>
