@@ -8,3 +8,12 @@
       value: "DEVELOPMENT"
     - name: CLUSTER
       value: "kind-local"
+- op: add
+  path: /spec/template/spec/containers/0/resources
+  value:
+    requests:
+      memory: "32Mi"
+      cpu: "25m"
+    limits:
+      memory: "64Mi"
+      cpu: "50m"
