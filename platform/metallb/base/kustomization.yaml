@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+
+# We'll use Helm for MetalLB deployment
+# This base provides the namespace and common structure
+labels:
+  - pairs:
+      managed-by: platform-team
+      component: load-balancer
