@@ -14,3 +14,24 @@
     limits:
       memory: "128Mi"
       cpu: "100m"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-world-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Hello Kubernetes - PRODUCTION!</title>
+    </head>
+    <body>
+        <h1>Hello World from Kubernetes!</h1>
+        <p>This is running in a pod managed by Kubernetes</p>
+        <p>Environment: <strong>PRODUCTION</strong></p>
+        <p>Cluster: k3s</p>
+        <p>Replicas: 3 (for high availability)</p>
+        <p>Resources: CPU/Memory limits set</p>
+    </body>
+    </html>
