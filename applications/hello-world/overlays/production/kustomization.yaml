@@ -7,8 +7,8 @@ resources:
 # Production-specific configurations  
 namespace: hello-world-prod
 
-patchesStrategicMerge:
-  - environment-patch.yaml
+patches:
+  - path: environment-patch.yaml
 
 # Production-specific labels
 labels:
