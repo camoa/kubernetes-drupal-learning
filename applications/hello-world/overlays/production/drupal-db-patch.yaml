@@ -6,17 +6,22 @@ data:
   database-settings.inc: |
     <?php
     /**
-     * Kubernetes Database Configuration - Production (Drupal 11 Compatible)
-     * Auto-injected by Kubernetes ConfigMap
+     * Kubernetes Database Configuration - Production (Drupal 11 Format)
+     * Auto-injected by Kubernetes ConfigMap - Exact format from Drupal installer
      */
     
-    // Simple Drupal 11 database configuration (following ddev pattern)
-    $databases['default']['default']['database'] = 'drupal_prod';
-    $databases['default']['default']['username'] = 'drupal';
-    $databases['default']['default']['password'] = 'Drupal123!';
-    $databases['default']['default']['host'] = '192.168.40.25';
-    $databases['default']['default']['port'] = 3306;
-    $databases['default']['default']['driver'] = 'mysql';
+    $databases['default']['default'] = array (
+      'database' => 'drupal_prod',
+      'username' => 'drupal',
+      'password' => 'Drupal123!',
+      'prefix' => '',
+      'host' => '192.168.40.25',
+      'port' => '3306',
+      'isolation_level' => 'READ COMMITTED',
+      'driver' => 'mysql',
+      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+      'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
+    );
 
     // Hash salt for security (use a strong one in production)
     $settings['hash_salt'] = 'kubernetes-prod-hash-salt-change-in-production-67890';
@@ -37,8 +42,3 @@ data:
 
     // Production-specific settings
     $config['system.logging']['error_level'] = 'hide';
-    $settings['cache']['default'] = 'cache.backend.database';
-    
-    // Security settings for production
-    $settings['update_free_access'] = FALSE;
-    $settings['allow_authorize_operations'] = FALSE;
