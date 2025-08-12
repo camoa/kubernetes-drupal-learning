@@ -3,12 +3,12 @@ kind: Kustomization
 
 resources:
   - ../../base
-  - pv-production.yaml  # Add PV only for production
 
 # Production-specific configurations  
 namespace: hello-world-prod
 
 patches:
+  # Original hello-world deployment
   - target:
       kind: Deployment
       name: hello-world-nginx
@@ -29,6 +29,17 @@ patches:
           limits:
             memory: "128Mi"
             cpu: "100m"
+  # Drupal deployment environment
+  - target:
+      kind: Deployment
+      name: drupal-nginx-php
+    path: drupal-patch.yaml
+  # Database configuration for production
+  - target:
+      kind: ConfigMap
+      name: drupal-database-config
+    path: drupal-db-patch.yaml
+  # Storage patches
   - target:
       kind: PersistentVolumeClaim
       name: web-content-pvc
@@ -43,4 +54,6 @@ labels:
 # Production replica count
 replicas:
   - name: hello-world-nginx
+    count: 3
+  - name: drupal-nginx-php
     count: 3

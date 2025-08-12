@@ -3,10 +3,17 @@ kind: Kustomization
 
 resources:
   - hello-world-namespace.yaml
-  - persistent-volume-claim.yaml  # Only PVC in base
+  - persistent-volume-claim.yaml
+  # Original hello-world app
   - deployment.yaml
   - service.yaml
   - ingress.yaml
+  # Drupal app
+  - nginx-drupal-configmap.yaml
+  - drupal-database-configmap.yaml
+  - drupal-deployment.yaml
+  - drupal-service.yaml
+  - drupal-ingress.yaml
 
 labels:
   - pairs:

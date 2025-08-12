@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: drupal-database-config
+  namespace: hello-world
+  labels:
+    app: drupal
+data:
+  database-settings.inc: |
+    <?php
+    /**
+     * Kubernetes Database Configuration - Development
+     * Auto-injected by Kubernetes ConfigMap
+     */
+    $databases['default']['default'] = [
+      'database' => 'drupal_dev',
+      'username' => 'drupal',
+      'password' => 'Drupal123!',
+      'prefix' => '',
+      'host' => '192.168.40.25',
+      'port' => '3306',
+      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+      'driver' => 'mysql',
+    ];
+
+    // Kubernetes-specific trusted host patterns
+    $settings['trusted_host_patterns'] = [
+      '^drupal\.local$',
+      '^localhost$',
+      '^127\.0\.0\.1$',
+    ];
+
+    // Development-specific settings
+    $config['system.logging']['error_level'] = 'verbose';
+    $settings['cache']['bins']['render'] = 'cache.backend.null';
+    $settings['cache']['bins']['page'] = 'cache.backend.null';
+    $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';

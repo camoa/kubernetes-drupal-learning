@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: drupal-ingress
+  namespace: hello-world
+  labels:
+    app: drupal
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+spec:
+  rules:
+  - host: drupal.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: drupal-service
+            port:
+              number: 80

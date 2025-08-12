@@ -8,10 +8,22 @@ resources:
 namespace: hello-world-dev
 
 patches:
+  # Original hello-world deployment
   - target:
       kind: Deployment
       name: hello-world-nginx
     path: environment-patch.yaml
+  # Drupal deployment environment
+  - target:
+      kind: Deployment
+      name: drupal-nginx-php
+    path: drupal-patch.yaml
+  # Database configuration for development
+  - target:
+      kind: ConfigMap
+      name: drupal-database-config
+    path: drupal-db-patch.yaml
+  # Storage patches
   - target:
       kind: PersistentVolumeClaim
       name: web-content-pvc
@@ -26,4 +38,6 @@ labels:
 # Single replica for development (ReadWriteOnce limitation)
 replicas:
   - name: hello-world-nginx
+    count: 1
+  - name: drupal-nginx-php
     count: 1
