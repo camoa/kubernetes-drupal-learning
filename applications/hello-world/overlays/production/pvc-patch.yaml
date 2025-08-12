@@ -4,4 +4,6 @@ metadata:
   name: web-content-pvc
   namespace: hello-world-prod
 spec:
-  storageClassName: ""  # Use static binding to our specific PV
+  storageClassName: "nfs"  # Match our NFS PV
+  accessModes:
+    - ReadWriteMany  # Multiple pods can share

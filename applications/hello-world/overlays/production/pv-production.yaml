@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: web-content-pv
+  name: web-content-pv-prod
+  labels:
+    app: hello-world
 spec:
-  local:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany  # Multiple pods can share
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: 192.168.40.25  # Your Ubuntu server IP
     path: /srv/web-content
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - ubuntu-server  # Replace with your actual server hostname
