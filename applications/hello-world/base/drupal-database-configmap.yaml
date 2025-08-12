@@ -11,38 +11,38 @@ data:
     /**
      * Kubernetes Database Configuration - Development (Drupal 11 Compatible)
      * Auto-injected by Kubernetes ConfigMap
+     * Based on settings.ddev.php pattern
      */
     
-    // Drupal 11 database configuration
-    $databases['default']['default'] = [
-      'database' => 'drupal_dev',
-      'username' => 'drupal',
-      'password' => 'Drupal123!',
-      'prefix' => '',
-      'host' => '192.168.40.25',
-      'port' => '3306',
-      'isolation_level' => 'READ COMMITTED',
-      'driver' => 'mysql',
-      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
-      'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
-    ];
+    // Simple Drupal 11 database configuration (following ddev pattern)
+    $databases['default']['default']['database'] = 'drupal_dev';
+    $databases['default']['default']['username'] = 'drupal';
+    $databases['default']['default']['password'] = 'Drupal123!';
+    $databases['default']['default']['host'] = '192.168.40.25';
+    $databases['default']['default']['port'] = 3306;
+    $databases['default']['default']['driver'] = 'mysql';
 
-    // Drupal 11 security and performance settings
+    // Hash salt for security (required by Drupal 11)
+    $settings['hash_salt'] = 'kubernetes-dev-hash-salt-change-in-production-12345';
+
+    // Skip permissions hardening for container environment
+    $settings['skip_permissions_hardening'] = TRUE;
+
+    // Kubernetes-specific trusted host patterns
     $settings['trusted_host_patterns'] = [
       '^drupal\.local$',
       '^localhost$',
       '^127\.0\.0\.1$',
+      '^192\.168\.40\.11$',
     ];
 
-    // Development-specific settings for Drupal 11
+    // Config sync directory
+    if (empty($settings['config_sync_directory'])) {
+      $settings['config_sync_directory'] = 'sites/default/files/sync';
+    }
+
+    // Development-specific settings
     $config['system.logging']['error_level'] = 'verbose';
     $settings['cache']['bins']['render'] = 'cache.backend.null';
     $settings['cache']['bins']['page'] = 'cache.backend.null';
     $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
-    
-    // Drupal 11 development mode
-    $settings['development_mode'] = TRUE;
-    $settings['skip_permissions_hardening'] = TRUE;
-    
-    // Hash salt (should be set for security)
-    $settings['hash_salt'] = 'kubernetes-dev-hash-salt-change-in-production';

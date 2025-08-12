@@ -6,25 +6,34 @@ data:
   database-settings.inc: |
     <?php
     /**
-     * Kubernetes Database Configuration - Production
+     * Kubernetes Database Configuration - Production (Drupal 11 Compatible)
      * Auto-injected by Kubernetes ConfigMap
      */
-    $databases['default']['default'] = [
-      'database' => 'drupal_prod',
-      'username' => 'drupal',
-      'password' => 'Drupal123!',
-      'prefix' => '',
-      'host' => '192.168.40.25',
-      'port' => '3306',
-      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
-      'driver' => 'mysql',
-    ];
+    
+    // Simple Drupal 11 database configuration (following ddev pattern)
+    $databases['default']['default']['database'] = 'drupal_prod';
+    $databases['default']['default']['username'] = 'drupal';
+    $databases['default']['default']['password'] = 'Drupal123!';
+    $databases['default']['default']['host'] = '192.168.40.25';
+    $databases['default']['default']['port'] = 3306;
+    $databases['default']['default']['driver'] = 'mysql';
 
-    // Kubernetes-specific trusted host patterns
+    // Hash salt for security (use a strong one in production)
+    $settings['hash_salt'] = 'kubernetes-prod-hash-salt-change-in-production-67890';
+
+    // Skip permissions hardening for container environment
+    $settings['skip_permissions_hardening'] = TRUE;
+
+    // Production trusted host patterns
     $settings['trusted_host_patterns'] = [
       '^drupal\.local$',
       '^192\.168\.40\.11$',
     ];
+
+    // Config sync directory
+    if (empty($settings['config_sync_directory'])) {
+      $settings['config_sync_directory'] = 'sites/default/files/sync';
+    }
 
     // Production-specific settings
     $config['system.logging']['error_level'] = 'hide';
