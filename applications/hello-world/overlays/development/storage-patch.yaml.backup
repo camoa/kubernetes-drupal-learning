@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: web-content-pv
+spec:
+  hostPath:
+    path: /host/workspace/kubernetes_web  # This maps to ~/workspace/kubernetes_web on your laptop
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: web-content-pvc
+  namespace: hello-world-dev
+spec:
+  storageClassName: ""  # Use static binding to our specific PV

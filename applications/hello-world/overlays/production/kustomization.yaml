@@ -3,32 +3,12 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - pv-production.yaml  # Add PV only for production
 
 # Production-specific configurations  
 namespace: hello-world-prod
 
 patches:
-  - target:
-      kind: ConfigMap
-      name: hello-world-html
-    patch: |-
-      - op: replace
-        path: /data/index.html
-        value: |
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Hello Kubernetes - PRODUCTION!</title>
-          </head>
-          <body>
-              <h1>Hello World from Kubernetes!</h1>
-              <p>This is running in a pod managed by Kubernetes</p>
-              <p>Environment: <strong>PRODUCTION</strong></p>
-              <p>Cluster: k3s</p>
-              <p>Replicas: 3 (for high availability)</p>
-              <p>Resources: CPU/Memory limits set</p>
-          </body>
-          </html>
   - target:
       kind: Deployment
       name: hello-world-nginx
@@ -49,6 +29,10 @@ patches:
           limits:
             memory: "128Mi"
             cpu: "100m"
+  - target:
+      kind: PersistentVolumeClaim
+      name: web-content-pvc
+    path: pvc-patch.yaml
 
 # Production-specific labels
 labels:

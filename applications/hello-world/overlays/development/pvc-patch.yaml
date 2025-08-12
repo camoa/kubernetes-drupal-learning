@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: web-content-pvc
+  namespace: hello-world-dev
+spec:
+  storageClassName: "standard"  # Use kind's default storage class
+  accessModes:
+    - ReadWriteOnce  # Match kind's supported access mode

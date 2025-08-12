@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: web-content-pvc
+  namespace: hello-world-dev  # Will be patched by overlays
+  labels:
+    app: hello-world
+spec:
+  accessModes:
+    - ReadWriteOnce  # Changed from ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""  # Empty string for static binding, will be overridden by overlays

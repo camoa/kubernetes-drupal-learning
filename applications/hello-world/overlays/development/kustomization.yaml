@@ -9,32 +9,21 @@ namespace: hello-world-dev
 
 patches:
   - target:
-      kind: ConfigMap
-      name: hello-world-html
-    patch: |-
-      - op: replace
-        path: /data/index.html
-        value: |
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Hello Kubernetes - DEV!</title>
-          </head>
-          <body>
-              <h1>Hello World from Kubernetes!</h1>
-              <p>This is running in a pod managed by Kubernetes</p>
-              <p>Environment: <strong>DEVELOPMENT</strong></p>
-              <p>Cluster: kind (local)</p>
-              <p>Replicas: 1 (for development)</p>
-          </body>
-          </html>
-  - target:
       kind: Deployment
       name: hello-world-nginx
     path: environment-patch.yaml
+  - target:
+      kind: PersistentVolumeClaim
+      name: web-content-pvc
+    path: pvc-patch.yaml
 
 # Development-specific labels
 labels:
   - pairs:
       environment: development
       cluster: kind-local
+
+# Single replica for development (ReadWriteOnce limitation)
+replicas:
+  - name: hello-world-nginx
+    count: 1

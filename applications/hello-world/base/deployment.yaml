@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: html
+        - name: web-content
           mountPath: /usr/share/nginx/html
         resources:
           requests:
@@ -31,6 +31,6 @@ spec:
             memory: "64Mi"
             cpu: "50m"
       volumes:
-      - name: html
-        configMap:
-          name: hello-world-html
+      - name: web-content
+        persistentVolumeClaim:
+          claimName: web-content-pvc

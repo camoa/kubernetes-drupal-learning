@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - hello-world-namespace.yaml
-  - configmap.yaml
+  - persistent-volume-claim.yaml  # Only PVC in base
   - deployment.yaml
   - service.yaml
   - ingress.yaml
