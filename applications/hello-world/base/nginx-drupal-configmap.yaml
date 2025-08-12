@@ -34,7 +34,7 @@ data:
         server {
             listen 80;
             server_name _;
-            root /app/web;
+            root /app/drupal/web;
             index index.php index.html;
 
             # Drupal specific configuration

@@ -9,11 +9,6 @@ spec:
       containers:
       - name: php-fpm
         env:
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: drupal-database
-              key: DB_NAME_PROD
         - name: DRUPAL_ENV
           value: "production"
         resources:

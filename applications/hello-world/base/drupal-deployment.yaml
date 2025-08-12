@@ -35,11 +35,12 @@ spec:
             memory: "128Mi"
             cpu: "100m"
       
-      # php-fpm container
+      # php-fpm container with Drupal 11 extensions
       - name: php-fpm
-        image: php:8.3-fpm
+        image: drupal:11-php8.3-fpm-alpine  # Drupal 11 with PHP 8.3
         ports:
         - containerPort: 9000
+        workingDir: /app/drupal
         volumeMounts:
         - name: drupal-content
           mountPath: /app

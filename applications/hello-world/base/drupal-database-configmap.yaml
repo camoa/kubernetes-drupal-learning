@@ -9,9 +9,11 @@ data:
   database-settings.inc: |
     <?php
     /**
-     * Kubernetes Database Configuration - Development
+     * Kubernetes Database Configuration - Development (Drupal 11 Compatible)
      * Auto-injected by Kubernetes ConfigMap
      */
+    
+    // Drupal 11 database configuration
     $databases['default']['default'] = [
       'database' => 'drupal_dev',
       'username' => 'drupal',
@@ -19,19 +21,28 @@ data:
       'prefix' => '',
       'host' => '192.168.40.25',
       'port' => '3306',
-      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+      'isolation_level' => 'READ COMMITTED',
       'driver' => 'mysql',
+      'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+      'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
     ];
 
-    // Kubernetes-specific trusted host patterns
+    // Drupal 11 security and performance settings
     $settings['trusted_host_patterns'] = [
       '^drupal\.local$',
       '^localhost$',
       '^127\.0\.0\.1$',
     ];
 
-    // Development-specific settings
+    // Development-specific settings for Drupal 11
     $config['system.logging']['error_level'] = 'verbose';
     $settings['cache']['bins']['render'] = 'cache.backend.null';
     $settings['cache']['bins']['page'] = 'cache.backend.null';
     $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+    
+    // Drupal 11 development mode
+    $settings['development_mode'] = TRUE;
+    $settings['skip_permissions_hardening'] = TRUE;
+    
+    // Hash salt (should be set for security)
+    $settings['hash_salt'] = 'kubernetes-dev-hash-salt-change-in-production';

@@ -8,10 +8,5 @@ spec:
       containers:
       - name: php-fpm
         env:
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: drupal-database
-              key: DB_NAME_DEV
         - name: DRUPAL_ENV
           value: "development"
