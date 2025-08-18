@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: monitoring-reader
+  labels:
+    app.kubernetes.io/name: monitoring-reader
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/part-of: monitoring-access
+subjects:
+- kind: ServiceAccount
+  name: monitoring-reader
+  namespace: monitoring
+roleRef:
+  kind: ClusterRole
+  name: monitoring-reader
+  apiGroup: rbac.authorization.k8s.io

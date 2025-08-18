@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: monitoring-access-base
+  annotations:
+    config.kubernetes.io/local-config: "true"
+
+resources:
+  - namespace.yaml
+  - service-account.yaml
+  - cluster-role.yaml
+  - cluster-role-binding.yaml
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/managed-by: kustomize
+      app.kubernetes.io/created-by: platform-team

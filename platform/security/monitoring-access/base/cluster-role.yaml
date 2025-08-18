@@ -1,0 +1,57 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: monitoring-reader
+  labels:
+    app.kubernetes.io/name: monitoring-reader
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/part-of: monitoring-access
+rules:
+# Read cluster-level metrics and status
+- apiGroups: [""]
+  resources: 
+    - nodes
+    - nodes/metrics
+    - nodes/stats
+    - nodes/proxy
+    - services
+    - endpoints
+    - pods
+    - pods/log
+  verbs: ["get", "list", "watch"]
+
+# Read metrics from metrics server
+- apiGroups: ["metrics.k8s.io"]
+  resources: 
+    - nodes
+    - pods
+  verbs: ["get", "list"]
+
+# Read deployment and replica set info
+- apiGroups: ["apps"]
+  resources:
+    - deployments
+    - replicasets
+    - daemonsets
+    - statefulsets
+  verbs: ["get", "list", "watch"]
+
+# Read ingress and networking info
+- apiGroups: ["networking.k8s.io"]
+  resources:
+    - ingresses
+  verbs: ["get", "list", "watch"]
+
+# Read config maps (for monitoring configuration)
+- apiGroups: [""]
+  resources:
+    - configmaps
+  verbs: ["get", "list", "watch"]
+
+# Non-resource URLs for cluster metrics
+- nonResourceURLs: 
+    - "/metrics"
+    - "/metrics/*"
+    - "/api/v1/nodes/*/proxy/metrics"
+    - "/api/v1/nodes/*/proxy/metrics/*"
+  verbs: ["get"]
