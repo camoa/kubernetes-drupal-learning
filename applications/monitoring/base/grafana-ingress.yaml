@@ -6,9 +6,8 @@ metadata:
   labels:
     app: grafana
     component: server
-  annotations:
-    kubernetes.io/ingress.class: haproxy
 spec:
+  ingressClassName: haproxy
   rules:
     - host: grafana.local
       http:
