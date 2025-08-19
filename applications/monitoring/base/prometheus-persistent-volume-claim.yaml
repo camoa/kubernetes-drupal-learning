@@ -13,7 +13,3 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: ""
-  selector:
-    matchLabels:
-      app: prometheus
-      component: storage

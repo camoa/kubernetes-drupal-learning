@@ -13,7 +13,3 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: ""
-  selector:
-    matchLabels:
-      app: grafana
-      component: storage
