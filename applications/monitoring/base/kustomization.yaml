@@ -11,10 +11,14 @@ resources:
   - prometheus-deployment.yaml
   - prometheus-service.yaml
   - prometheus-ingress.yaml
+  - prometheus-persistent-volume.yaml
+  - prometheus-persistent-volume-claim.yaml
   - grafana-config.yaml
   - grafana-deployment.yaml
   - grafana-service.yaml
   - grafana-ingress.yaml
+  - grafana-persistent-volume.yaml
+  - grafana-persistent-volume-claim.yaml
 
 labels:
   - includeSelectors: true

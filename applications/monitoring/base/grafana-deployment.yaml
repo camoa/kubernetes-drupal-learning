@@ -51,5 +51,6 @@ spec:
           configMap:
             name: grafana-config
         - name: grafana-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: grafana-storage-pvc
       restartPolicy: Always
