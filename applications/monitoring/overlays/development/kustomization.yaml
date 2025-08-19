@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: monitoring-development
+  annotations:
+    config.kubernetes.io/local-config: "true"
+
+resources:
+  - ../../base
+
+namespace: monitoring
+
+labels:
+  - includeSelectors: true
+    pairs:
+      environment: development
+      team: application
+
+# Development-specific patches if needed
+# patches: []
